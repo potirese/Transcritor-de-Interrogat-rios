@@ -106,10 +106,15 @@ async function processVideo() {
     const apiBase = (window.APP_CONFIG?.API_BASE_URL || "").replace(/\/$/, "");
     if (!apiBase) throw new Error("Backend não configurado");
 
-    const response = await fetch(`${apiBase}/api/transcript?video_id=${encodeURIComponent(videoId)}&languages=pt,pt-PT,en`, {
-      method: "GET",
-      headers: { "Accept": "application/json" }
-    });
+    let response;
+    try {
+      response = await fetch(`${apiBase}/api/transcript?video_id=${encodeURIComponent(videoId)}&languages=pt,pt-PT,en`, {
+        method: "GET",
+        headers: { "Accept": "application/json" }
+      });
+    } catch (networkError) {
+      throw new Error("Não foi possível contactar o backend. Se estás a usar GitHub Pages, o backend precisa de estar ligado num endereço público. 127.0.0.1 só funciona no teu próprio PC.");
+    }
 
     const data = await response.json();
     if (!response.ok) throw new Error(data.detail || "Não foi possível obter a transcrição.");
@@ -125,8 +130,8 @@ async function processVideo() {
     toast(`Transcrição obtida: ${data.lines.length} blocos.`);
   } catch (error) {
     console.error(error);
-    setStatus("SEM TRANSCRIÇÃO");
-    toast(`${error.message} Podes colar a transcrição manualmente.`, true);
+    setStatus(error.message.includes("backend") ? "BACKEND OFFLINE" : "SEM TRANSCRIÇÃO");
+    toast(error.message, true);
   } finally {
     $("processBtn").disabled = false;
     $("processBtn").textContent = "Processar";
