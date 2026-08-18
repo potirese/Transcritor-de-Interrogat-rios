@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interrogar • Transcrição</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">I</div>
+        <div>
+          <h1>INTERROGAR</h1>
+          <p>Ferramenta de apoio à transcrição</p>
+        </div>
+      </div>
+      <div class="status-pill" id="statusPill">PRONTO</div>
+    </header>
+
+    <main>
+      <section class="card source-card">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">01 · FONTE</span>
+            <h2>Carregar interrogatório</h2>
+          </div>
+        </div>
+
+        <label for="youtubeUrl">Link do YouTube</label>
+        <div class="input-row">
+          <input id="youtubeUrl" type="url" placeholder="https://www.youtube.com/watch?v=..." autocomplete="off">
+          <button class="primary" id="processBtn">Processar</button>
+        </div>
+        <div class="source-meta" id="sourceMeta" hidden>
+          <div>
+            <span class="meta-label">Vídeo</span>
+            <strong id="videoTitle">—</strong>
+          </div>
+          <a id="videoOpen" href="#" target="_blank" rel="noopener">Abrir vídeo ↗</a>
+        </div>
+        <p class="hint">O site usa um pequeno backend para obter a legenda/transcrição do YouTube. Sem backend configurado, pode colar a transcrição manualmente abaixo.</p>
+      </section>
+
+      <section class="card editor-card">
+        <div class="section-head editor-head">
+          <div>
+            <span class="eyebrow">02 · TRANSCRIÇÃO</span>
+            <h2>Editar e preparar</h2>
+          </div>
+          <div class="toolbar">
+            <button class="secondary" id="cleanBtn">Limpar formatação</button>
+            <button class="secondary" id="exampleBtn">Exemplo</button>
+            <button class="primary" id="copyBtn">Copiar para Discord</button>
+          </div>
+        </div>
+
+        <div class="speaker-tools">
+          <input id="interviewerName" type="text" placeholder="Nome do interrogador">
+          <input id="intervieweeName" type="text" placeholder="Nome do interrogado">
+        </div>
+
+        <textarea id="transcript" spellcheck="true" placeholder="A transcrição aparecerá aqui...\n\nTambém podes colar diretamente a transcrição do YouTube neste campo."></textarea>
+
+        <div class="editor-footer">
+          <span id="stats">0 palavras · 0 caracteres</span>
+          <span id="saveStatus">As alterações ficam apenas neste navegador.</span>
+        </div>
+      </section>
+
+      <section class="card output-card">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">03 · SAÍDA</span>
+            <h2>Pré-visualização para Discord</h2>
+          </div>
+        </div>
+        <pre id="discordPreview" class="preview">Ainda não há transcrição.</pre>
+      </section>
+    </main>
+
+    <footer>
+      <span>INTERROGAR · apoio à documentação</span>
+      <span>Sem base de dados · dados locais no navegador</span>
+    </footer>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
